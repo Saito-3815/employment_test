@@ -1,15 +1,22 @@
 FROM node:20-alpine
 
-# 要件を満たすようにDockerfileを編集してください。
+# メンテナーのラベルを追加
+LABEL maintainer="sai.engineer3815@gmail.com"
 
-# ヒント1：コマンドを実行するディレクトリを作成
+# コマンドを実行するディレクトリを作成
+WORKDIR /usr/src/app
 
-# ヒント2：依存関係ファイルをコピー
+# 依存関係ファイルをコピー
+COPY app/package*.json ./
 
-# ヒント3：依存関係のインストール
+# 依存関係のインストール
+RUN npm install
 
-# ヒント4：アプリケーションのソースコードをコピー
+# アプリケーションのソースコードをコピー
+COPY app .
 
-# ヒント5：ポートを公開
+# ポートを公開
+EXPOSE 3000
 
-# ヒント6：npm run devを実行
+# npm run devを実行
+CMD ["npm", "run", "dev"]
