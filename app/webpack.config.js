@@ -6,8 +6,9 @@ const { watch } = require('fs')
 module.exports = {
   entry: './src/main.js',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: 'js/[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   resolve: {
     alias: {
@@ -22,10 +23,10 @@ module.exports = {
         use: 'svg-url-loader'
       },
       {
-        test: /\.png$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[hash][ext][query]'
+          filename: 'assets/images/[name].[hash:7][ext]'
         }
       },
       {
@@ -66,6 +67,7 @@ module.exports = {
     ],
     compress: false,
     port: 3000,
-    hot: true
+    hot: true,
+    host: '0.0.0.0' // すべてのネットワークインターフェースでリッスン
   }
 }
