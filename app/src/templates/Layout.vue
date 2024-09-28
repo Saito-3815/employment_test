@@ -18,8 +18,8 @@ import logo from '../assets/images/avatar.png'
 <style scoped>
 .layout {
   display: flex;
-  background-color: white;
-  color: black;
+  background-color: var(--body-background);
+  color: var(--main-text);
   flex-direction: column;
   height: 100vh;
   overflow: hidden;

@@ -66,11 +66,11 @@ watch(route, (newRoute) => {
 
 <style scoped>
 .main {
-  border: 1px solid black;
+  border: var(--border);
   padding: 10px;
   margin: 10px;
   width: calc(100% - 22px);
-  background-color: white;
+  background-color: var(--body-background);
   border-radius: 10px;
   height: 100%;
   box-sizing: border-box;

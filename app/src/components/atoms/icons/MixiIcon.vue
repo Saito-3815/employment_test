@@ -10,6 +10,6 @@
 .icon {
   width: 24px;
   height: 24px;
-  color: black;
+  color: var(--main-text);
 }
 </style>
