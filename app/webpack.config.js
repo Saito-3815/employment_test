@@ -1,7 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
-const { watch } = require('fs')
 const webpack = require('webpack')
 
 module.exports = {
@@ -13,7 +12,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'src'),
+      'process/browser': 'process/browser.js'
     },
     extensions: ['.js', '.vue'],
   },

@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-// import About from '../components/About.vue';
-import MainContent from '../components/organisms/MainContent.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import MainContent from '../components/organisms/MainContent.vue'
 
 const routes = [
   {
@@ -13,12 +12,12 @@ const routes = [
     name: 'About',
     component: MainContent
   },
-  // 他のルートを追加
-];
+  { path: '/hacker-news', name: 'HackerNews', component: MainContent }
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-});
+})
 
-export default router;
+export default router

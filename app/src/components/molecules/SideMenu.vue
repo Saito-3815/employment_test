@@ -6,6 +6,7 @@
     <nav>
     <ul>
       <li @click="showAbout">About</li>
+      <li @click="showNews">Hacker News</li>
       <!-- 他のメニュー項目 -->
     </ul>
   </nav>
@@ -29,6 +30,10 @@ const router = useRouter();
 
 const showAbout = () => {
   router.push({ name: 'About' });
+};
+
+const showNews = () => {
+  router.push({ name: 'HackerNews' });
 };
 </script>
 
