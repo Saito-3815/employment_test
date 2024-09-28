@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const { watch } = require('fs')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/main.js',
@@ -14,7 +15,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src')
     },
-    extensions: ['.js', '.vue']
+    extensions: ['.js', '.vue'],
   },
   module: {
     rules: [
@@ -56,6 +57,14 @@ module.exports = {
       template: './index.html',
       favicon: './public/favicon.ico',
       filename: 'index.html'
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        VUE_APP_BASE_URL: JSON.stringify(process.env.VUE_APP_BASE_URL || '/')
+      }
     })
   ],
   devServer: {
@@ -63,8 +72,18 @@ module.exports = {
       {
         directory: path.join(__dirname, 'dist'),
         watch: true
+      },
+      {
+        directory: path.join(__dirname, 'src/assets/markdown'), 
+        publicPath: '/markdown', 
+        watch: true
       }
     ],
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: path.posix.join('/', 'index.html') }
+      ]
+    },
     compress: false,
     port: 3000,
     hot: true,
