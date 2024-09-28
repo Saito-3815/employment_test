@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+import Layout from './templates/Layout.vue'
+</script>
 
 <template>
-  <h1>Hello,World</h1>
+  <Layout>
+    <router-view />
+  </Layout>
 </template>
-
-<style scoped></style>

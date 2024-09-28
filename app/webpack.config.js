@@ -1,19 +1,21 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
-const { watch } = require('fs')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: 'js/[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'src'),
+      'process/browser': 'process/browser.js'
     },
-    extensions: ['.js', '.vue']
+    extensions: ['.js', '.vue'],
   },
   module: {
     rules: [
@@ -22,10 +24,10 @@ module.exports = {
         use: 'svg-url-loader'
       },
       {
-        test: /\.png$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[hash][ext][query]'
+          filename: 'assets/images/[name].[hash:7][ext]'
         }
       },
       {
@@ -55,6 +57,14 @@ module.exports = {
       template: './index.html',
       favicon: './public/favicon.ico',
       filename: 'index.html'
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        VUE_APP_BASE_URL: JSON.stringify(process.env.VUE_APP_BASE_URL || '/')
+      }
     })
   ],
   devServer: {
@@ -62,10 +72,21 @@ module.exports = {
       {
         directory: path.join(__dirname, 'dist'),
         watch: true
+      },
+      {
+        directory: path.join(__dirname, 'src/assets/markdown'), 
+        publicPath: '/markdown', 
+        watch: true
       }
     ],
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: path.posix.join('/', 'index.html') }
+      ]
+    },
     compress: false,
     port: 3000,
-    hot: true
+    hot: true,
+    host: '0.0.0.0' // すべてのネットワークインターフェースでリッスン
   }
 }
