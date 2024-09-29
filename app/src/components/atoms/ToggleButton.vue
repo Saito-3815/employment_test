@@ -1,6 +1,6 @@
 <template>
   <div class="toggle-container">
-    <v-switch v-model="isDarkMode" color="success"></v-switch>
+    <v-switch v-model="isDarkMode" color="primary"></v-switch>
   </div>
 </template>
 
@@ -15,7 +15,6 @@ const theme = useTheme()
 
 // ダークモードの状態を適用する関数
 const applyDarkMode = (value) => {
-  console.log('applyDarkMode called with value:', value)
   document.documentElement.setAttribute('data-theme', value ? 'dark' : 'light')
   localStorage.setItem('darkMode', value)
 }
@@ -29,13 +28,11 @@ onMounted(() => {
     // システムのデフォルト設定を適用
     isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
   }
-  console.log('onMounted: isDarkMode.value =', isDarkMode.value) // デバッグ用ログ
   applyDarkMode(isDarkMode.value)
 })
 
 // ダークモードの状態が変わったときに実行される処理
 watch(isDarkMode, (newValue) => {
-  console.log('watch: newValue =', newValue)
   applyDarkMode(newValue)
 })
 </script>
